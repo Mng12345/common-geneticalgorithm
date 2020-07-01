@@ -10,7 +10,7 @@ if you want to find the maximal value of the function `x^2+3*sin(x*y*z)+y^2-z^2`
 
 ## the function's graph
 
-![image](https://github.com/Mng12345/common-geneticalgorithm/blob/master/grapg/g01.jpg)
+![image](https://github.com/Mng12345/common-geneticalgorithm/blob/master/graph/g01.jpg)
 
 ## code
 ```java
