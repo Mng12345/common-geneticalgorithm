@@ -40,19 +40,21 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
         this.crossFunction = crossFunction;
         this.comparatorFunction = comparatorFunction;
         this.initFunction = initFunction;
+        this.setTrace(new ArrayList<>());
         initPop();
     }
 
 
 
     @Override
-    public void start() {
+    public List<Individual<T1, T2>> start() {
         for (int i=0; i<generalSize; i++) {
             select();
             cross();
             mutate();
             saveBest();
         }
+        return this.getTrace();
     }
 
     @Override
@@ -92,9 +94,7 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
 
     private void select() {
         // 将种群进行排序
-        this.individuals = this.individuals.stream()
-                .sorted(this.comparatorFunction.apply())
-                .collect(Collectors.toList());
+        this.individuals.sort(this.comparatorFunction.apply());
         int first20 = (int) (0.2 * this.popSize);
         int last80 = this.popSize - first20;
         // 从first20中挑选出last80个个体
@@ -114,8 +114,7 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
                 this.individuals.set(index[1], crossedIndividuals.getV2());
             }
         }
-        // 重新计算适应度值指标
-        for (int i=0; i<this.popSize; i++) {
+        for (int i=0; i<popSize; i++) {
             this.individuals.get(i).calculateIndex();
         }
     }
@@ -141,5 +140,9 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
         if (compareValue < 0) {
             this.setBestIndividual(currentBestIndividual.clone());
         }
+        // 将全局最佳个体随机替换进种群中
+        this.individuals.set((int)Math.floor(Math.random() * popSize), getBestIndividual().clone());
+        // 记录全局最佳个体
+        this.getTrace().add(this.getBestIndividual().clone());
     }
 }

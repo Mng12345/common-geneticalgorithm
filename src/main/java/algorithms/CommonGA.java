@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @Author zhangming
@@ -16,6 +17,7 @@ import java.util.Comparator;
 public abstract class CommonGA<T1, T2> {
 
     private Individual<T1, T2> bestIndividual;
+    private List<Individual<T1, T2>> trace;
 
     public interface CrossFunction<T1, T2> {
         Tuple<Individual<T1, T2>, Individual<T1, T2>> apply(Individual<T1, T2> individual1, Individual<T1, T2> individual2);
@@ -41,7 +43,7 @@ public abstract class CommonGA<T1, T2> {
     }
 
     // 启动
-    public abstract void start();
+    public abstract List<Individual<T1, T2>> start();
 
     // 调整参数
     public abstract CommonGA<T1, T2> withPopSize(int popSize);
