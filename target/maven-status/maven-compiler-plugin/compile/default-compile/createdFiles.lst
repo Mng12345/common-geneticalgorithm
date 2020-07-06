@@ -1,7 +1,7 @@
-algorithms\CommonGA$CrossFunction.class
-algorithms\CommonGA$InitFunction.class
-algorithms\Individual.class
-algorithms\CommonGA$ComparatorFunction.class
+com\zhangm\algorithms\Individual.class
+com\zhangm\algorithms\CommonGA.class
+com\zhangm\algorithms\impl\SimpleGA.class
+com\zhangm\algorithms\CommonGA$InitFunction.class
 examples\SimpleIndividual.class
-algorithms\CommonGA.class
-algorithms\impl\SimpleGA.class
+com\zhangm\algorithms\CommonGA$ComparatorFunction.class
+com\zhangm\algorithms\CommonGA$CrossFunction.class

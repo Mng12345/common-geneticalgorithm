@@ -1,6 +1,6 @@
-package algorithms;
+package com.zhangm.algorithms;
 
-import algorithms.impl.SimpleGA;
+import com.zhangm.algorithms.impl.SimpleGA;
 import com.zhangm.easyutil.Tuple;
 import lombok.Getter;
 import lombok.Setter;

@@ -16,8 +16,8 @@ if you want to find the maximal value of the function `x^2+3*sin(x*y*z)+y^2-z^2`
 ```java
 package examples;
 
-import algorithms.CommonGA;
-import algorithms.Individual;
+import com.zhangm.algorithms.CommonGA;
+import com.zhangm.algorithms.Individual;
 import com.zhangm.easyutil.Tuple;
 
 

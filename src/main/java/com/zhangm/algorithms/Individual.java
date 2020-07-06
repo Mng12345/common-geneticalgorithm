@@ -1,11 +1,7 @@
-package algorithms;
+package com.zhangm.algorithms;
 
-import com.zhangm.easyutil.Tuple;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * @Author zhangming

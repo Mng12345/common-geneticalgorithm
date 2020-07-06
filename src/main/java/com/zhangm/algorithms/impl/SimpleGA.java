@@ -1,7 +1,7 @@
-package algorithms.impl;
+package com.zhangm.algorithms.impl;
 
-import algorithms.CommonGA;
-import algorithms.Individual;
+import com.zhangm.algorithms.CommonGA;
+import com.zhangm.algorithms.Individual;
 import com.zhangm.easyutil.RangeUtil;
 import com.zhangm.easyutil.Tuple;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -43,8 +42,6 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
         this.setTrace(new ArrayList<>());
         initPop();
     }
-
-
 
     @Override
     public List<Individual<T1, T2>> start() {
@@ -104,16 +101,21 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
     }
 
     private void cross() {
+        List<Tuple<Integer, Integer>> crossedIndexes = new ArrayList<>();
         for (int i=0; i<this.popSize; i++) {
             if (Math.random() < this.pCross) {
                 // 从种群中随机挑选出两个不重复的个体
                 int[] index = new int[2];
-                List<Individual<T1, T2>> twoIndividuals = RangeUtil.randomNotRepeat(this.individuals, 2, index);
-                Tuple<Individual<T1, T2>, Individual<T1, T2>> crossedIndividuals = this.crossFunction.apply(twoIndividuals.get(0), twoIndividuals.get(1));
-                this.individuals.set(index[0], crossedIndividuals.getV1());
-                this.individuals.set(index[1], crossedIndividuals.getV2());
+                RangeUtil.randomNotRepeat(this.individuals, 2, index);
+                crossedIndexes.add(new Tuple<>(index[0], index[1]));
             }
         }
+        crossedIndexes.parallelStream().forEach(twoCrossIndex -> {
+            Tuple<Individual<T1, T2>, Individual<T1, T2>> crossedIndividuals = this.crossFunction.apply(
+                    this.individuals.get(twoCrossIndex.getV1()), this.individuals.get(twoCrossIndex.getV2()));
+            this.individuals.set(twoCrossIndex.getV1(), crossedIndividuals.getV1());
+            this.individuals.set(twoCrossIndex.getV2(), crossedIndividuals.getV2());
+        });
         for (int i=0; i<popSize; i++) {
             this.individuals.get(i).calculateIndex();
         }

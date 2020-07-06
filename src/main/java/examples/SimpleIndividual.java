@@ -1,7 +1,7 @@
 package examples;
 
-import algorithms.CommonGA;
-import algorithms.Individual;
+import com.zhangm.algorithms.CommonGA;
+import com.zhangm.algorithms.Individual;
 import com.zhangm.easyutil.Tuple;
 
 
