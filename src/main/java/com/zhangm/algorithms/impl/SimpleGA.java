@@ -3,6 +3,7 @@ package com.zhangm.algorithms.impl;
 import com.zhangm.algorithms.CommonGA;
 import com.zhangm.algorithms.Individual;
 import com.zhangm.easyutil.RangeUtil;
+import com.zhangm.easyutil.Streams;
 import com.zhangm.easyutil.Tuple;
 import lombok.Getter;
 import lombok.Setter;
@@ -84,7 +85,7 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
         for (int i=0; i<popSize; i++) {
             Individual<T1, T2> individual = this.initFunction.apply();
             individual.calculateIndex();
-            this.individuals.add(this.initFunction.apply());
+            this.individuals.add(individual);
         }
         this.setBestIndividual(this.individuals.stream().min(this.comparatorFunction.apply()).orElse(null));
     }
@@ -116,9 +117,8 @@ public class SimpleGA<T1, T2> extends CommonGA<T1, T2> {
             this.individuals.set(twoCrossIndex.getV1(), crossedIndividuals.getV1());
             this.individuals.set(twoCrossIndex.getV2(), crossedIndividuals.getV2());
         });
-        for (int i=0; i<popSize; i++) {
-            this.individuals.get(i).calculateIndex();
-        }
+        Streams.forEachIndexedParallel(this.individuals.stream(),
+                (individual, index) -> this.individuals.get(index.intValue()).calculateIndex());
     }
 
     private void mutate() {
